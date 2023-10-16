@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>{% block title %}{% endblock title %}</title>
+	<link rel="shortcut icon" type="{% static 'image/png' %}" href="{% static 'images/fav.png' %}">
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+	<link rel="stylesheet" href="{% static 'css/animate.css' %}">
+	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+	<link rel="stylesheet" href="{% static 'css/green.css' %}" id="style_theme">
+	<link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+	<link rel="stylesheet" href="{% static 'charts/css/morris.css' %}">
+	<link rel="stylesheet" href="{% static 'css/jquery-jvectormap.css' %}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="{% static 'js/modernizr.min.js' %}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>  
+
+</head>
+
+<body>
+	{% include 'basee.html' %}
+	{% if messages %}
+	<ul class="messages">
+		{% for message in messages %}
+		<li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+	{% block content %}
+
+	{% endblock content %}
+	<div class="container">
+		<div class="d-sm-flex justify-content-center">
+			<span class="text-muted text-center d-block d-sm-inline-block">Copyright © 2018 <a
+					href="http://www.konnectplugins.com/" target="_blank">konnectcode</a>. All rights reserved.</span>
+		</div>
+	</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+	<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script> 
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'charts/js/raphael-min.js' %}"></script>
+	<script src="{% static 'charts/js/morris.min.js' %}"></script>
+	<script src="{% static 'js/custom-morris.js' %}"></script>
+
+	<script src="{% static 'js/custom.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+{% extends "sendemail/base.html" %}
+{% block title %}Contact us{% endblock title %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">Contact Us</div>
+    </div>
+
+    <div class="row">
+        <div class="mb-3">
+            <label for="email" class="form-label" disabled>Email address</label>
+            <input type="email" class="form-control" id="email" name='email' placeholder="{{email}}" disabled>
+        </div>
+        <br>
+        <label for="otp">OTP:</label>
+        <input type="number" id="otp" name="otp" min="10000" max="100000">
+        <button class="btn btn-primary" onclick="myFunction()">Submit</button>
+        <button class="btn btn-primary" onclick="myFunction1()">Resend</button>
+        <p id="demo"></p>
+    </div>
+</div>
+<script>
+    console.log('printed')
+
+    function myFunction1() {
+        document.getElementById("demo").innerHTML = "resend";
+        console.log('OTP', otp)
+            $.ajax({
+                type: "POST",
+                url: "{% url 'contact' %}",
+                data: { "otp": '{{otp}}', "first_name": "{{fname}}", "last_name": "{{lname}}", "username": "{{username}}", "email": "{{email}}", "password": "{{password}}"},
+                success: function (data) {
+                    console.log("OTP", otp)
+                    window.location.href = '/'
+                }
+            })
+    }
+    function myFunction() {
+        document.getElementById("demo").innerHTML = "Hello World";
+        let otp = $('#otp').val();
+        console.log('OTP', otp)
+
+        if (otp == '{{otp}}') {
+            console.log('Otp MATCHED')
+            $.ajax({
+                type: "POST",
+                url: "{% url 'verify_otp' %}",
+                data: { "otp": otp, "email_verify": "Email is verified", "first_name": "{{fname}}", "last_name": "{{lname}}", "username": "{{username}}", "email": "{{email}}", "password": "{{password}}"},
+                success: function (data) {
+                    console.log("OTP", otp)
+                    window.location.href = '/'
+                }
+            })
+        }
+        else{
+            $.ajax({
+                type: "POST",
+                url: "{% url 'unverify_otp' %}",
+                data: { "otp": otp, "email_verify": "Email is verified", "first_name": "{{fname}}", "last_name": "{{lname}}", "username": "{{username}}", "email": "{{email}}", "password": "{{password}}"},
+                success: function (data) {
+                    console.log("OTP", otp)
+                    window.location.href = '/register'
+                }
+            })
+
+        }
+    }
+</script>
+{% endblock content %}

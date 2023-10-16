@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block content %}
+{{department}}
+<div class="container">
+    <div class="row">
+        <!-- Widget Item -->
+        <div class="col-md-12">
+            <div class="widget-area-2 proclinic-box-shadow">
+                <h3 class="widget-title">Add Appointment</h3>
+                <form method="POST" action="{% url 'add_appointment' %}">{% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="patient-name">Patient ID</label>
+                            <select class="form-control" id="patient_name" name="patient_name">
+                                {% for k in patient %}
+                                <option value={{k.id}}>{{k.patient_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="department">Department</label>
+                            <select class="form-control" id="department" name='department'>
+                                <option value="Other">Other</option>
+                                {% for k in Specialization %}
+                                <option value="{{ k.id }}">{{k.name}}</option>
+                                {% endfor %}
+                                
+                            </select>
+
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="doctor-name">Doctor Name</label>
+                            <select class="department_doctor" id="department_doctor" name="department_doctor">
+                                {% comment %} #from javscript {% endcomment %}
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="appointment-date">Appointment Date</label>
+                            <input type="date" placeholder="Appointment Date" class="form-control" id="appointment-date" name="appointment_date">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="time-slot">Time Slot</label>
+                            <select class="form-control" id="time-slot" name="time_slot">
+                                <option>10AM-11AM</option>
+                                <option>11AM-12PM</option>
+                                <option>12PM-01PM</option>
+                                <option>2PM-3PM</option>
+                                <option>3PM-4PM</option>
+                                <option>4PM-5PM</option>
+                                <option>6PM-7PM</option>
+                                <option>7PM-8PM</option>
+                                <option>8PM-9PM</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="token-number">Token Number <small>(Auto Generated)</small></label>
+                            <input type="text" placeholder="Token Number" class="form-control" id="token-number">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="problem">Problem</label>
+                            <textarea placeholder="Problem" class="form-control" id="problem" name="problem" rows="3"></textarea>
+                        </div>
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <label class="custom-control-label" for="ex-check-2" id='fee'>Doctor Consultation Fee &#8377;  </label> 
+                            
+                        </div>
+                        <br><br>
+                        <div class="form-group col-md-6 mb-3">
+                            <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- /Alerts-->
+            </div>
+        </div>
+        <!-- /Widget Item -->
+    </div>
+</div>
+<script>
+    document.getElementById("department").addEventListener("change", function() {
+        var Specialization = this.value;
+        var citySelect = document.getElementById("department_doctor");
+        
+        var Consultation_fee = document.getElementById("fee");
+        console.log(Specialization);
+        
+        citySelect.innerHTML = "";
+        {% for dr in doctor %}
+        if ({{ dr.specialization.id }} == Specialization) {
+                
+
+                var option = document.createElement("option");
+                option.value = {{ dr.id }};
+                option.textContent = "{{ dr.doctor_name }}";
+                citySelect.appendChild(option);
+        }
+        {% endfor %}
+        var doctor1 = document.getElementById('department_doctor');
+        Consultation_fee.innerHTML = ''
+        {% for dr in doctor %}
+        if ({{ dr.id }} == doctor1.value) {
+                var value = {{ dr.consultation_fee }};
+                Consultation_fee.innerHTML += value;
+        }
+        {% endfor %}
+        
+
+    });
+    document.getElementById("department_doctor").addEventListener("change", function() {
+        var Consultation_fee = document.getElementById("fee");
+        var doctor1 = document.getElementById('department_doctor');
+        Consultation_fee.innerHTML = ''
+        {% for dr in doctor %}
+        if ({{ dr.id }} == doctor1.value) {
+                var value = {{ dr.consultation_fee }};
+                Consultation_fee.innerHTML += value;
+        }
+        {% endfor %}
+    });
+</script>
+{% endblock content %}

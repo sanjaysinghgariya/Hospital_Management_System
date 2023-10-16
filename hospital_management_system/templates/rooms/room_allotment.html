@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+
+    <div class="row">
+        <!-- Widget Item -->
+        <div class="col-md-12">
+            <div class="widget-area-2 proclinic-box-shadow">
+                <h3 class="widget-title">Add Room Allotment</h3>
+                <form  method="POST" action="{% url 'room_allotment' %}">{% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="room-type">Room Type</label>
+                            <select class="form-control" id="room_type" name="room_type" required>
+                                <option value="other">Other</option>
+                                {% for k in room_info  %}
+                                <option value="{{k.id}}">{{k.types_of_room}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="room-number">Room Number</label>
+                            <select class="form-control" id="room_number" name="room_number" required>
+                                
+                            </select>
+                        </div>
+                        
+                        <div class="form-group col-md-6">
+                            <label for="patient-name">Patient Name</label>
+                            <select class="form-control" id="patient_name" name="patient_name" required>
+                                {% for k in patient %}
+                                <option>{{k.patient_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="allot-date">Allotment Date</label>
+                            <input type="date" placeholder="Allotment Date" class="form-control" id="allot-date" name="allot_date"  required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="discharge-date">Discharge Date</label>
+                            <input type="date" placeholder="Discharge Date" class="form-control" id="discharge-date" name="discharge_date">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="doctor-name">Doctor Name</label>
+                            <select class="form-control" id="doctor_name" name="doctor_name" required>
+                                {% for k in doctor %}
+                                <option>{{k.doctor_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6 mb-3">
+                            <button type="submit" class="btn btn-primary btn-lg">Allot Room</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script> 
+    document.getElementById("room_type").addEventListener("change", function() {
+        var roomId = this.value;
+        var citySelect = document.getElementById("room_number");
+        
+        citySelect.innerHTML = "";
+        {% for room in room_num %}
+        if ({{ room.type_of_room.id }} == roomId) {
+                var option = document.createElement("option");
+                option.value = {{ room.id }};
+                option.textContent = "{{ room.room_number }}";
+                citySelect.appendChild(option);
+        }
+        {% endfor %}
+    });
+</script>
+{% endblock content %}
+    

@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-0">
+    <div class="row breadcrumb-bar">
+        <div class="col-md-6">
+            <h3 class="block-title">Appointments</h3>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="index.html">
+                        <span class="ti-home"></span>
+                    </a>
+                </li>
+                <li class="breadcrumb-item">Appointments</li>
+                <li class="breadcrumb-item active">Appointments List</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<!-- /Page Title -->
+
+<!-- /Breadcrumb -->
+<!-- Main Content -->
+<div class="container">
+
+<div class="row">
+    <!-- Widget Item -->
+    <div class="col-md-12">
+        <div class="widget-area-2 proclinic-box-shadow">
+            <h3 class="widget-title">Appointments List</h3>
+            <div class="table-responsive mb-3">
+                <table id="tableId" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            
+                            <th>Appointment ID</th>
+                            <th>Patient ID</th>
+                            <th>Token Number</th>
+                            <th>Doctor Name</th>
+                            <th>Problem</th>
+                            <th>Visit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for k in appointment %}
+
+                        <tr>
+                            
+                            <td>{{k.registration_no}}</td>
+                            <td><a href="{% url 'appointment_detail' k.id %}">{{k.Patient.id}}</a></td>
+                            <td>{{k.Token_Number}}</td>
+                            <td>{{k.Doctor_name.doctor_name}}</td>
+                            <td>{{k.Problem}}</td>
+                            <td>
+                            {% if k.visit %}
+                            <button type="button" id="visited_patient" class="btn btn-primary mt-3 mb-0">Visited</button></td>
+                                
+                            {% else %}
+                                <button type="button" id="visited_patient" class="btn btn-primary mt-3 mb-0"><a href="{% url 'visited_patient' k.id%}">Visit</a></button></td>
+                            {%endif%}
+                            </form>
+                        </tr> 
+                        {% endfor %}
+                        
+                    </tbody>
+                </table>
+                
+            
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center export-pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#"><span class="ti-download"></span> csv</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#"><span class="ti-printer"></span>  print</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#"><span class="ti-file"></span> PDF</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#"><span class="ti-align-justify"></span> Excel</a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /Export links-->
+                <button type="button" class="btn btn-danger mt-3 mb-0"><span class="ti-trash"></span> DELETE</button>
+                <button type="button" class="btn btn-primary mt-3 mb-0"><span class="ti-pencil-alt"></span> <a href="{% url 'appointment_edit' 15 %}">EDIT</a></button>
+            </div>
+        </div>
+    </div>
+    <!-- /Widget Item -->
+</div>
+</div>
+<script>
+
+    
+    function myFunction() {
+    toastr.success('Message successfully sent');
+    // You can add your custom JavaScript code here
+    }
+
+    // Get the button element by its ID
+    var button = document.getElementById("visited_patient");
+
+    // Attach the function to the button's click event
+    button.addEventListener("click", myFunction);
+</script>
+{% endblock content %}

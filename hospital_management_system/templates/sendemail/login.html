@@ -1,0 +1,27 @@
+{% extends "sendemail/base.html" %}
+{% block title %}Contact us{% endblock title %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">Registration Us</div>
+    </div>
+    
+    <div class="row">        
+        <form  method="post" >{% csrf_token %}
+
+            <div class="mb-3">
+                <label for="username" class="form-label">Email address</label>
+                <input type="username" class="form-control" id="username" name='username' placeholder="username">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password: </label>
+                <input type="password" class="form-control" id="password" name='password'>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{% url 'forgetpassword' %}" class="btn btn-primary">forgetpassword</a>
+        </form>
+
+        
+    </div>
+</div>
+{% endblock content %}

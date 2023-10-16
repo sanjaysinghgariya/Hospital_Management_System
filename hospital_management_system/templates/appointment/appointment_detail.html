@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-0">
+    <div class="row breadcrumb-bar">
+        <div class="col-md-6">
+            <h3 class="block-title">Appointment Details</h3>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="index.html">
+                        <span class="ti-home"></span>
+                    </a>
+                </li>
+                <li class="breadcrumb-item">Appointments</li>
+                <li class="breadcrumb-item active">Appointment Details</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<!-- /Page Title -->
+
+<!-- /Breadcrumb -->
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <!-- Widget Item -->
+        <div class="col-md-12">
+            <div class="widget-area-2 proclinic-box-shadow">
+                <h3 class="widget-title">Appointment Details</h3>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <td><strong>Patient ID</strong></td>
+                                <td>{{appointment.registration_no}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Department</strong></td>
+                                <td>{{appointment.Department.name}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Doctor Name</strong></td>
+                                <td>{{appointment.Doctor_name.doctor_name}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Consultation Fee</strong></td>
+                                <td>&#8377 {{appointment.Doctor_name.consultation_fee}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Appointment Date</strong></td>
+                                <td>{{appointment.visit_date}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Time Slot </strong></td>
+                                <td>{{appointment.Time_Slot}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Token Number </strong></td>
+                                <td>{{appointment.Token_Number}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Problem</strong></td>
+                                <td>{{appointment.Problem}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--Export links-->
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination export-pagination">
+                            <li class="page-item">
+                                <a class="page-link" href="#"><span class="ti-download"></span> csv</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#"><span class="ti-printer"></span> print</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#"><span class="ti-file"></span> PDF</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#"><span class="ti-align-justify"></span> Excel</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    
+                    <!-- /Export links-->
+                    <button type="button" class="btn btn-success mb-3"><span class="ti-pencil-alt"></span> <a href="{% url 'appointment_edit'  appid %}">EDIT Appointment</a>
+                        </button>
+                    <button type="button" class="btn btn-danger mb-3"><span class="ti-trash"></span><a href="{% url 'appointment_cancel' appid %}">Cancel Appointment</a></button>
+                </div>
+            </div>
+        </div>
+        <!-- /Widget Item -->
+    </div>
+</div>
+{% endblock content %}

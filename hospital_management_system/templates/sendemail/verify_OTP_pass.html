@@ -1,0 +1,79 @@
+{% extends "sendemail/base.html" %}
+{% block title %}Contact us{% endblock title %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">Forget Password</div>
+    </div>
+
+    <div class="row">
+        <div class="mb-3">
+            <label for="email" class="form-label" disabled>Email address</label>
+            <input type="email" class="form-control" id="email" name='email' placeholder="{{email}}" disabled>
+        </div>
+        <br>
+        <label for="otp">OTP:</label>
+        <input type="number" id="otp" name="otp" min="10000" max="100000">
+        <button  class="btn btn-primary" onclick="myFunction()">Submit</button>
+        <div class="mb-3" id='myDIV' style="display:none">
+            <label for="password" class="form-label">Password: </label>
+            <input type="password" class="form-control" id="password" name='password' placeholder="name@example.com">
+            <button class="btn btn-primary" onclick="printOTP()">Submit</button>
+
+        </div>
+        <p id="demo"></p>
+    </div>
+</div>
+<script>
+    console.log('printed')
+    function myFunction() {
+        var x = document.getElementById("myDIV");
+        let otp = $('#otp').val();
+        if (otp == '{{otp}}') {
+            x.style.display = "block";
+            console.log('Otp MATCHED')
+      }
+    }
+    
+    function printOTP() {
+        let password = $('#password').val();
+        $.ajax({
+            type: "POST",
+            url: "{% url 'verify_otp_pass' %}",
+            data: { "password": password, "email_verify": "Email is verified", "email": "{{email}}"},
+            success: function (data) {
+                console.log("OTP", otp)
+                window.location.href = '/login'
+            }
+        })
+      }
+    
+    </script>
+
+    {% comment %} function printOTP() {
+        document.getElementById("demo").innerHTML = "Hello World";
+        let password = $('#password').val();
+        console.log('password', password)
+            
+            $.ajax({
+                type: "POST",
+                url: "{% url 'verify_otp' %}",
+                data: { "password": password, "email_verify": "Email is verified", "email": "{{email}}"},
+                success: function (data) {
+                    console.log("OTP", otp)
+                    window.location.href = '/login'
+                }
+            })
+    } 
+    var URL="{% url 'verify_otp_pass' %}"
+    function printOTP(){
+            let password = $('#password').val();
+
+            var data = {"email": "{{email}}",'password':password};
+            $.post(URL, data);
+
+
+
+        }
+        {% endcomment %}
+{% endblock content %}

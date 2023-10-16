@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-0">
+    <div class="row breadcrumb-bar">
+        <div class="col-md-6">
+            <h3 class="block-title">Edit Patient</h3>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="index.html">
+                        <span class="ti-home"></span>
+                    </a>
+                </li>
+                <li class="breadcrumb-item">Patients</li>
+                <li class="breadcrumb-item active">Edit Patient</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<!-- /Page Title -->
+
+<!-- /Breadcrumb -->
+<!-- Main Content -->
+<div class="container">
+
+<div class="row">
+    <!-- Widget Item -->
+    <div class="col-md-12">
+        <div class="widget-area-2 proclinic-box-shadow">
+            <h3 class="widget-title">Edit Patient</h3>
+            <form method="POST" action="{% url 'patient_edit'  patient.id %}">{% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="patient-name">Patient Name</label>
+                        <input type="text" value="{{patient.patient_name}}" class="form-control" placeholder="Patient name" id="patient-name" disabled>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="dob">Date Of Birth</label>
+                        <input type="date" value="{{patient.Date_of_birth}}" placeholder="Date of Birth" class="form-control" id="dob" name='dob'>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="age">Age</label>
+                        <input type="text" value="{{patient.Age}}" placeholder="Age" class="form-control" id="age" name="age">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="phone">Phone</label>
+                        <input type="text" value="{{patient.phone_number}}" placeholder="Phone" class="form-control" id="phone" name="phone">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="email">Email</label>
+                        <input type="email" value="{{patient.Email}}" placeholder="email" class="form-control" id="Email" name="email">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="gender">Gender</label>
+                        <select class="form-control" id="gender" disabled>
+                            <option selected>{{patient.gender}}</option>
+                            <option>Female</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="exampleFormControlTextarea1">Address</label>
+                        <textarea placeholder="Address" class="form-control"name="address" id="exampleFormControlTextarea1" rows="3">{{patient.Address}}</textarea>
+                    </div>
+                    
+                    <div class="form-group col-md-6 mb-3">
+                        <button type="submit" class="btn btn-primary btn-lg">Update</button>
+                    </div>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock content %}
+    
